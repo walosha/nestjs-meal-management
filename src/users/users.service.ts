@@ -14,7 +14,7 @@ export class UsersService {
   findOne() {}
 
   findAll(): Observable<User[]> {
-    return null;
+    return from(this.userModel.query());
   }
 
   update() {}
