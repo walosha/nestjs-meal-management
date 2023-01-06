@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { from, Observable } from 'rxjs';
 import { User } from './users.model';
 
@@ -7,8 +7,16 @@ import { User } from './users.model';
 export class UsersService {
   constructor(@Inject(User) private readonly userModel: typeof User) {}
 
-  create(user: User): Observable<User> {
-    return from(this.userModel.query().insertAndFetch(user));
+  async create(user: User): Promise<User> {
+    const email = await this.userModel.query().findOne({ email: user.email });
+    if (email) {
+      throw new HttpException(
+        'Email is associated with an existing account!',
+        HttpStatus.CONFLICT,
+      );
+    }
+
+    return await this.userModel.query().insertAndFetch(user);
   }
 
   findOne() {}

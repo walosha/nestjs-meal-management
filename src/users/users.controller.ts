@@ -7,11 +7,11 @@ export class UsersController {
 
   @Get()
   users() {
-    this.usersService.findAll();
+    return this.usersService.findAll();
   }
 
   @Post()
   create(@Body() user: User) {
-    this.usersService.create(user);
+    return this.usersService.create(user);
   }
 }
