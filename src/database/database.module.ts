@@ -4,6 +4,8 @@ import { knexSnakeCaseMappers } from 'objection';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { BaseModel } from './base.model';
 import { User } from '../users/users.model';
+import { Addon } from '../addons/addons.model';
+import { Brand } from '../brands/brands.model';
 
 @Global()
 @Module({
@@ -28,7 +30,7 @@ import { User } from '../users/users.model';
         };
       },
     }),
-    ObjectionModule.forFeature([User]),
+    ObjectionModule.forFeature([User, Addon, Brand]),
   ],
   exports: [ObjectionModule],
 })

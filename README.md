@@ -1,6 +1,10 @@
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="250" alt="Nest Logo" /></a>
+</p>
+
 # Food court
 
-## Built with
+## Built with tools below.
 
 - Typescript
 - Nodejs
@@ -11,10 +15,6 @@
 - Docker & docker compose
 - Github actions
 - Aws Beanstalk
-
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="50" alt="Nest Logo" /></a>
-</p>
 
 ## Running the app
 

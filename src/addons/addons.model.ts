@@ -1,8 +1,9 @@
+import { Expose } from 'class-transformer';
 import { BaseModel } from '../database/base.model';
 import {
-  IsEmail,
   IsInt,
   IsNotEmpty,
+  IsNumber,
   IsNumberString,
   Min,
 } from 'class-validator';
@@ -10,17 +11,18 @@ import {
 export class Addon extends BaseModel {
   static tableName = 'addons';
 
-  @IsEmail()
+  @IsNotEmpty()
   name: string;
 
   @IsInt()
-  brandId: string;
+  brandId: number;
 
   @IsNotEmpty()
   description: string;
 
-  @IsNumberString()
-  @Min(0)
+  @IsNotEmpty()
+  @IsNumber({ maxDecimalPlaces: 2 })
+  @Min(0.01)
   price: string;
 
   @IsNotEmpty()
