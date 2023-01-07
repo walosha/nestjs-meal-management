@@ -1,3 +1,4 @@
+import * as bcrypt from 'bcrypt';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { from, Observable } from 'rxjs';
@@ -8,6 +9,12 @@ import { UserRole } from './role.enum';
 export class UsersService {
   constructor(@Inject(User) private readonly userModel: typeof User) {}
 
+  private async hashPassword(password: string) {
+    const saltOrRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltOrRounds);
+    return hashedPassword;
+  }
+
   async create(user: User): Promise<User> {
     try {
       const email = await this.userModel.query().findOne({ email: user.email });
@@ -17,6 +24,8 @@ export class UsersService {
           HttpStatus.CONFLICT,
         );
       }
+
+      user.password = await this.hashPassword(user.password);
       user.roles = [UserRole.User];
       return await this.userModel.query().insertAndFetch(user);
     } catch (error) {
