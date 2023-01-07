@@ -10,6 +10,8 @@ export async function up(knex: Knex) {
     t.string('email').notNullable().unique();
     t.string('first_name').notNullable();
     t.string('last_name').notNullable();
+    t.specificType('roles', 'text ARRAY');
+    t.string('password').notNullable();
   });
 }
 

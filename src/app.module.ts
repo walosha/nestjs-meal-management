@@ -4,7 +4,10 @@ import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { AddonsModule } from './addons/addons.module';
 import { BrandsModule } from './brands/brands.module';
+import { AuthService } from './auth/auth.service';
+import { AuthModule } from './auth/auth.module';
 import validateEnv from './config/env';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -14,11 +17,12 @@ import validateEnv from './config/env';
       validate: validateEnv,
     }),
     DatabaseModule,
+    AuthModule,
     UsersModule,
     AddonsModule,
     BrandsModule,
+    AuthModule,
   ],
-  controllers: [],
-  providers: [],
+  providers: [AuthService, JwtService],
 })
 export class AppModule {}
