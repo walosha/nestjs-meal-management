@@ -6,6 +6,6 @@ import UserRepository from './repository/KnexUserRepository';
 @Module({
   providers: [UsersService, UserRepository],
   controllers: [UsersController],
-  exports: [UsersService, UserRepository],
+  exports: [UsersService],
 })
 export class UsersModule {}

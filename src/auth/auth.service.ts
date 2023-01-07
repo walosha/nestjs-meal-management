@@ -1,29 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import UserRepository from 'src/users/repository/KnexUserRepository';
 import { isPasswordMatch } from 'src/users/utils';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private userRepository: UserRepository,
+    private usersService: UsersService,
     private jwtService: JwtService,
   ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    const user = await this.userRepository.findByEmail(email);
-    if (isPasswordMatch(password, user.password)) {
-      const { password, ...userDetails } = user;
-      return userDetails;
+    const user = await this.usersService.findOnebyEmail(email);
+    if (!user || !(await isPasswordMatch(password, user.password))) {
+      throw new HttpException(
+        'Email or password not found',
+        HttpStatus.NOT_FOUND,
+      );
     }
-    return null;
+    delete user.password;
+    return user;
   }
 
   async login(user: any) {
     const payload = {
-      username: user.username,
-      sub: user.userId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      sub: user.id,
       roles: user.roles,
     };
     return {
