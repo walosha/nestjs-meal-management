@@ -28,6 +28,7 @@
     "seed:make": "npx run knex seed:make -- -x ts"
   },
   "dependencies": {
+    "@casl/ability": "^6.3.3",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^8.0.0",

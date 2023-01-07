@@ -3,12 +3,13 @@ import {
   ArrayMinSize,
   IsArray,
   IsEmail,
+  IsInt,
   IsNotEmpty,
   IsString,
   IsStrongPassword,
   Length,
 } from 'class-validator';
-import { UserRole } from './role.enum';
+import { Role } from './roles.model';
 
 export class User extends BaseModel {
   static tableName = 'users';
@@ -28,8 +29,25 @@ export class User extends BaseModel {
   @IsStrongPassword()
   password: string;
 
-  @IsArray()
-  @ArrayMinSize(1)
-  @IsString({ each: true })
-  roles: UserRole[];
+  @IsInt()
+  roles_id: Role;
+
+  static relationMappings = {
+    roles: {
+      modelClass: `${__dirname}/roles.model`,
+      relation: User.BelongsToOneRelation,
+      join: {
+        from: 'user.id',
+        to: 'roles.id',
+      },
+    },
+    role_permissions: {
+      modelClass: `${__dirname}/role_permission.model`,
+      relation: User.BelongsToOneRelation,
+      join: {
+        from: 'user.id',
+        to: 'role_permissions.id',
+      },
+    },
+  };
 }

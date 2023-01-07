@@ -1,16 +1,15 @@
 import { Knex } from 'knex';
 
-const tableName = 'addons';
+const tableName = 'role_permissions';
 
 export async function up(knex: Knex) {
   return knex.schema.createTable(tableName, (t) => {
     // this creates an "id" column that gets autoincremented
-    t.increments().unsigned();
-    t.string('name').notNullable();
-    t.integer('brandId').notNullable();
-    t.string('description');
-    t.double('price').notNullable();
-    t.string('category').notNullable();
+    t.increments();
+    t.integer('permissionId').unsigned().notNullable();
+    t.foreign('permissionId').references('permissions.id');
+    t.integer('rolesId').unsigned().notNullable();
+    t.foreign('rolesId').references('roles.id');
   });
 }
 
