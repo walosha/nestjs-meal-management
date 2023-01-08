@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { from, Observable } from 'rxjs';
-import { User } from './users.model';
+import { User } from './models/users.model';
 import { UserRole } from './role.enum';
 import UserRepository from './repository/KnexUserRepository';
 
@@ -19,7 +19,7 @@ export class UsersService {
     return hashedPassword;
   }
 
-  async create(payload: User, role: UserRole = UserRole.User): Promise<User> {
+  async create(payload: any, role: any = UserRole.User): Promise<User> {
     try {
       const email = await this.userRepository.findByEmail(payload.email);
       if (email) {
@@ -30,12 +30,12 @@ export class UsersService {
       }
 
       payload.password = await this.hashPassword(payload.password);
-      payload.roles = [role];
-      console.log({ payload, role });
+      payload.roles_id = role;
       const user = await this.userRepository.create(payload);
       delete user.password;
       return user;
     } catch (error) {
+      console.log({ error });
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }

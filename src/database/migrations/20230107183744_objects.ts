@@ -1,16 +1,12 @@
 import { Knex } from 'knex';
 
-const tableName = 'addons';
+const tableName = 'objects';
 
 export async function up(knex: Knex) {
   return knex.schema.createTable(tableName, (t) => {
     // this creates an "id" column that gets autoincremented
     t.increments().unsigned();
-    t.string('name').notNullable();
-    t.integer('brandId').notNullable();
-    t.string('description');
-    t.double('price').notNullable();
-    t.string('category').notNullable();
+    t.string('name');
   });
 }
 

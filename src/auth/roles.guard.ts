@@ -11,6 +11,7 @@ export class RolesGuard implements CanActivate {
       'roles',
       [context.getHandler(), context.getClass()],
     );
+
     if (!requiredRoles) {
       return true;
     }
