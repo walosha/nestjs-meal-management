@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { AuthController } from './auth.controller';
 import UserRepository from 'src/users/repository/KnexUserRepository';
+import { Permission_ } from 'src/users/models/permissions.model';
 
 @Module({
   imports: [
@@ -19,7 +20,13 @@ import UserRepository from 'src/users/repository/KnexUserRepository';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, LocalStrategy, JwtStrategy, UserRepository],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    JwtStrategy,
+    UserRepository,
+    // Permission,
+  ],
   exports: [AuthService],
 })
 export class AuthModule {}

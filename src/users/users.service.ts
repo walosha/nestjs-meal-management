@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { from, Observable } from 'rxjs';
-import { User } from './users.model';
+import { User } from './models/users.model';
 import { UserRole } from './role.enum';
 import UserRepository from './repository/KnexUserRepository';
 
